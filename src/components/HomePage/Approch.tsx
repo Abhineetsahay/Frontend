@@ -1,6 +1,6 @@
 import priority from "../../assets/priority.png";
 import extractionImage from "../../assets/efficientDataExtraction.png";
-import routing from "../../assets/routing.png";
+import routing from "../../assets/routing1.png";
 import predictiveMaintance from "../../assets/priority.png";
 import continuousImp from "../../assets/continuousImprovement.png";
 
@@ -53,7 +53,10 @@ const Approch = () => {
         {data.map((section, index) => (
           <div
             key={section.id}
-            className={`flex flex-col md:flex-row items-center w-full max-w-4xl ${
+            className={`flex flex-col md:flex-row items-center w-full max-w-4xl 
+                    transition-all
+                    hover:scale-105
+                    ${
               index % 2 !== 0 ? "md:flex-row-reverse" : ""
             } bg-white shadow-md rounded-lg overflow-hidden`}
           >

@@ -4,7 +4,6 @@ import Home from './Pages/Home';
 import Authoisation from './Pages/Authorisation';
 import DashBoard from './Pages/DashbBoard';
 
-
 function App() {
   return (
     <div className="bg-gradient-to-br from-white to-red-400 h-full">

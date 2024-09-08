@@ -1,6 +1,4 @@
 import React from "react";
-import "./Registartion.css";
-import { TextField, Button, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { auth } from "../Firebase/Firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
@@ -14,31 +12,31 @@ interface FormData {
   password: string;
   confirmPassword: string;
 }
+
 interface RegisteInRailMadadProps {
-          toggleAuth: () => void;
+  toggleAuth: () => void;
 }
 
-const RegisteInRailMadad: React.FC<RegisteInRailMadadProps> = ({toggleAuth}) => {
+const RegisteInRailMadad: React.FC<RegisteInRailMadadProps> = ({ toggleAuth }) => {
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm<FormData>();
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
   const handleRegister = async (data: FormData) => {
     try {
       await createUserWithEmailAndPassword(auth, data.email, data.password);
       navigate('/dashboard');
       toast.success("User Created Successfully");
-
     } catch (error: any) {
-          const errorMessage = getErrorMessage(error.code);
-          console.log(errorMessage);
-          toast.error(errorMessage);
-        }
+      const errorMessage = getErrorMessage(error.code);
+      toast.error(errorMessage);
+    }
   };
+
   const getErrorMessage = (code: string): string => {
     switch (code) {
       case "auth/email-already-in-use":
@@ -53,95 +51,120 @@ const RegisteInRailMadad: React.FC<RegisteInRailMadadProps> = ({toggleAuth}) => 
   };
 
   return (
-    <div className="create-acc">
-      <div className="acc-box">
-        <Typography variant="h4">Create your account</Typography>
-        <form className="form" onSubmit={handleSubmit(handleRegister)}>
-          <TextField
-            label="Username"
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            {...register("username", { required: "Username is required" })}
-            error={!!errors.username}
-            helperText={errors.username ? errors.username.message : ""}
-          />
+    <div className="min-h-screen flex items-center justify-center bg-white">
+      <div className="bg-red-100 p-8 shadow-lg rounded-lg w-full max-w-md">
+        <h2 className="text-3xl font-bold text-red-600 text-center mb-6">Create your account</h2>
+        <form className="space-y-4" onSubmit={handleSubmit(handleRegister)}>
+          <div>
+            <input
+              type="text"
+              placeholder="Username"
+              className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 ${
+                errors.username ? "border-red-500" : "border-gray-300"
+              }`}
+              {...register("username", { required: "Username is required" })}
+            />
+            {errors.username && (
+              <p className="text-red-500 text-sm mt-1">{errors.username.message}</p>
+            )}
+          </div>
 
-          <TextField
-            label="Phone number"
-            type="text"
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            {...register("phone", {
-              required: "Phone number is required",
-              pattern: {
-                value: /^\d+$/,
-                message: "Please enter a valid phone number (digits only)",
-              },
-            })}
-            error={!!errors.phone}
-            helperText={errors.phone ? errors.phone.message : ""}
-          />
+          <div>
+            <input
+              type="text"
+              placeholder="Phone number"
+              className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 ${
+                errors.phone ? "border-red-500" : "border-gray-300"
+              }`}
+              {...register("phone", {
+                required: "Phone number is required",
+                pattern: {
+                  value: /^\d+$/,
+                  message: "Please enter a valid phone number (digits only)",
+                },
+              })}
+            />
+            {errors.phone && (
+              <p className="text-red-500 text-sm mt-1">{errors.phone.message}</p>
+            )}
+          </div>
 
-          <div id="recaptcha-container"></div>
+          <div>
+            <input
+              type="email"
+              placeholder="Email"
+              className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 ${
+                errors.email ? "border-red-500" : "border-gray-300"
+              }`}
+              {...register("email", {
+                required: "Email is required",
+                pattern: {
+                  value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+                  message: "Enter a valid email",
+                },
+              })}
+            />
+            {errors.email && (
+              <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
+            )}
+          </div>
 
-          <TextField
-            label="Email"
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            {...register("email", {
-              required: "Email is required",
-              pattern: {
-                value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-                message: "Enter a valid email",
-              },
-            })}
-            error={!!errors.email}
-            helperText={errors.email ? errors.email.message : ""}
-          />
+          <div>
+            <input
+              type="password"
+              placeholder="Password"
+              className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 ${
+                errors.password ? "border-red-500" : "border-gray-300"
+              }`}
+              {...register("password", {
+                required: "Password is required",
+                minLength: {
+                  value: 6,
+                  message: "Password must be at least 6 characters",
+                },
+              })}
+            />
+            {errors.password && (
+              <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
+            )}
+          </div>
 
-          <TextField
-            label="Password"
-            type="password"
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            {...register("password", {
-              required: "Password is required",
-              minLength: {
-                value: 6,
-                message: "Password must be at least 6 characters",
-              },
-            })}
-            error={!!errors.password}
-            helperText={errors.password ? errors.password.message : ""}
-          />
+          <div>
+            <input
+              type="password"
+              placeholder="Confirm Password"
+              className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 ${
+                errors.confirmPassword ? "border-red-500" : "border-gray-300"
+              }`}
+              {...register("confirmPassword", {
+                required: "Confirm Password is required",
+                validate: (value) =>
+                  value === watch("password") || "Passwords do not match",
+              })}
+            />
+            {errors.confirmPassword && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.confirmPassword.message}
+              </p>
+            )}
+          </div>
 
-          <TextField
-            label="Confirm Password"
-            type="password"
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            {...register("confirmPassword", {
-              required: "Confirm Password is required",
-              validate: (value) =>
-                value === watch("password") || "Passwords do not match",
-            })}
-            error={!!errors.confirmPassword}
-            helperText={
-              errors.confirmPassword ? errors.confirmPassword.message : ""
-            }
-          />
-          <Button type="submit" variant="contained" color="primary" fullWidth>
+          <button
+            type="submit"
+            className="w-full bg-red-600 text-white p-3 rounded-lg font-semibold hover:bg-red-700 transition duration-300"
+          >
             CREATE ACCOUNT
-          </Button>
+          </button>
 
-          <Typography variant="body2" className="login-text" >
-            You have an account? <span className="login" onClick={toggleAuth}>Login</span>
-          </Typography>
+          <p className="text-center text-gray-600 mt-4">
+            You have an account?{" "}
+            <span
+              className="text-red-600 cursor-pointer hover:underline"
+              onClick={toggleAuth}
+            >
+              Login
+            </span>
+          </p>
         </form>
       </div>
     </div>
