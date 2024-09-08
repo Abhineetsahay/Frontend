@@ -1,7 +1,5 @@
 
 import { Route, Routes } from 'react-router-dom';
-import './App.css';
-import RegisteInRailMadad from './components/Registration/Registartion.Rail';
 import Home from './Pages/Home';
 import Authoisation from './Pages/Authorisation';
 import DashBoard from './Pages/DashbBoard';
@@ -9,7 +7,7 @@ import DashBoard from './Pages/DashbBoard';
 
 function App() {
   return (
-    <div className="App">
+    <div className="bg-gradient-to-br from-white to-red-400 h-full">
       <Routes>
         <Route path='/' element={<Home/>}/>
         <Route path='/auth' element={<Authoisation/>}/>
