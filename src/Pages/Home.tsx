@@ -12,7 +12,7 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className="bg-main-bg bg-cover bg-no-repeat min-h-screen">
+    <div className={"bg-img-div bg-cover bg-no-repeat h-screen overflow-scroll"} >
       <Navbar handleScrollToApproach={handleScrollToApproach} />
       <div ref={approachRef}>
         <Approch />
